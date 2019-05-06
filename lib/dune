@@ -1,0 +1,14 @@
+(library
+ (name common)
+ (inline_tests)
+ (modules feature_flipper)
+ (preprocess
+  (pps ppx_inline_test ppx_expect))
+ (libraries core))
+
+(executable
+ (name coretop)
+ (modules coretop)
+ (libraries compiler-libs.toplevel core)
+ (link_flags (-linkall))
+ (modes byte))

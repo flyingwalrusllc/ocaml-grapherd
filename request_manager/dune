@@ -1,0 +1,8 @@
+(executable
+ (name request_manager)
+ (libraries httpaf httpaf-async async))
+
+(alias
+ (name everything)
+ (deps
+  (glob_files *.exe)))
