@@ -1,0 +1,14 @@
+(library
+ (name grapher)
+ (inline_tests)
+ (modules grapher vertex graph reachable path)
+ (preprocess
+  (pps ppx_deriving ppx_inline_test ppx_expect))
+ (libraries core))
+
+(executable
+ (name graphtoplevel)
+ (modules graphtoplevel)
+ (libraries compiler-libs.toplevel grapher)
+ (link_flags (-linkall))
+ (modes byte))
