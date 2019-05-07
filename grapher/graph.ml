@@ -11,11 +11,15 @@ module type Graph = sig
   val edges : t -> Vertex.Label.t -> Vertex.Edge.t list
   (** [egdes t label] return the list of edges on vertex label *)
 
+  val edge_labels : t -> Vertex.Label.t -> Vertex.Label.t list
+
   val label : t -> Vertex.Label.t -> Vertex.Label.t
   (** [label t label] get the actual label of the vertex at label
 
       this is only here for testing access
    *)
+
+  val remove_edge : t -> Vertex.Label.t -> unit
 
   val add_edge : t -> Vertex.Label.t -> Vertex.Edge.t -> unit
 
@@ -41,33 +45,38 @@ module Make_graph (V : Vertex.Vertex) : Graph = struct
     let set da i v = da.ar.(i) <- v
 
     let length da = Array.length da.ar
-
   end
 
   type t = DynArray.t
 
   let init length start =
     let arr = Array.create ~len:length (V.create (Vertex.Label.of_int 0)) in
-    let _ = Array.folding_mapi arr ~init:0 ~f:(fun i b _ ->
-                let _ = Array.set arr i (V.create (Vertex.Label.of_int (i+start))) in
-                (b, arr)) in
+    let _ =
+      Array.folding_mapi arr ~init:0 ~f:(fun i b _ ->
+          let _ = arr.(i) <- V.create (Vertex.Label.of_int (i + start)) in
+          (b, arr) )
+    in
     arr
 
   let grow g id =
     let rec growth_amount current at_least =
-      if current > at_least then current else growth_amount (current * 2) at_least in
+      if current > at_least then current
+      else growth_amount (current * 2) at_least
+    in
     let length = DynArray.length g in
-    let growth = (growth_amount length id) - length in
-    if growth > length then
-      g.ar <- Array.append g.ar (init growth length)
+    let growth = growth_amount length id - length in
+    if growth > length then g.ar <- Array.append g.ar (init growth length)
 
   let create i =
     let ar = init i 0 in
     DynArray.of_array ar
-               
+
   let edges g l =
     let _ = grow g (Vertex.Label.to_int l) in
     V.edges (DynArray.get g (Vertex.Label.to_int l))
+
+  let edge_labels graph label =
+    List.map (edges graph label) ~f:(fun e -> Vertex.Edge.label e)
 
   let label g l = V.label (DynArray.get g (Vertex.Label.to_int l))
 
@@ -77,7 +86,7 @@ module Make_graph (V : Vertex.Vertex) : Graph = struct
     let idx = Vertex.Label.to_int label in
     let _ = grow g idx in
     let v = DynArray.get g idx in
-    DynArray.set g idx (V.add_edge v edge )
+    DynArray.set g idx (V.add_edge v edge)
 
   let add_edges g label edges =
     let idx = Vertex.Label.to_int label in
@@ -86,15 +95,23 @@ module Make_graph (V : Vertex.Vertex) : Graph = struct
     let _ = List.map edges ~f:(fun e -> V.add_edge v e) in
     ()
 
-  let length g = DynArray.length g
+  let remove_edge graph label =
+    let idx = Vertex.Label.to_int label in
+    let _ = grow graph idx in
+    let v = DynArray.get graph idx in
+    let filtered =
+      List.filter (V.edges v) ~f:(fun e ->
+          not (Vertex.Label.equal label (Vertex.Edge.label e)) )
+    in
+    let _ = DynArray.set graph idx (V.make label filtered) in
+    ()
 
+  let length g = DynArray.length g
 end
 
-let%test_module "list_vertex_graph" = (module struct
-
-    module S = Make_graph(Vertex.Vertex_list)
-             
-    open Vertex.Label
+let%test_module "list_vertex_graph" =
+  ( module struct
+    module S = Make_graph (Vertex.Vertex_list)
 
     let%test "create" =
       let graph = S.create 100 in
@@ -105,10 +122,9 @@ let%test_module "list_vertex_graph" = (module struct
       let graph = S.create 100 in
       let rec check idx =
         let label = Vertex.Label.of_int idx in
-        if (S.length graph) < idx then
+        if S.length graph < idx then
           let v_label = S.label graph (Vertex.Label.of_int idx) in
-          if label == v_label then check (idx+1) else
-            false
+          if Vertex.Label.equal label v_label then check (idx + 1) else false
         else true
       in
       check 0
@@ -118,14 +134,11 @@ let%test_module "list_vertex_graph" = (module struct
       let _ = S.edges graph (Vertex.Label.of_int 20) in
       let len = S.length graph in
       Int.equal len 40
+  end )
 
-end)
-
-let%test_module "set_vertex_graph" = (module struct
-
-    module S = Make_graph(Vertex.Vertex_set)
-             
-    open Vertex.Label
+let%test_module "set_vertex_graph" =
+  ( module struct
+    module S = Make_graph (Vertex.Vertex_set)
 
     let%test "create" =
       let graph = S.create 100 in
@@ -136,10 +149,9 @@ let%test_module "set_vertex_graph" = (module struct
       let graph = S.create 100 in
       let rec check idx =
         let label = Vertex.Label.of_int idx in
-        if (S.length graph) < idx then
+        if S.length graph < idx then
           let v_label = S.label graph (Vertex.Label.of_int idx) in
-          if label == v_label then check (idx+1) else
-            false
+          if Vertex.Label.equal label v_label then check (idx + 1) else false
         else true
       in
       check 0
@@ -149,5 +161,4 @@ let%test_module "set_vertex_graph" = (module struct
       let _ = S.edges graph (Vertex.Label.of_int 20) in
       let len = S.length graph in
       Int.equal len 40
-
-end)
+  end )

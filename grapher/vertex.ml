@@ -7,7 +7,7 @@ module Label : sig
 
   val to_int : t -> int
 
-  val ( == ) : t -> t -> bool
+  val equal : t -> t -> bool
 end = struct
   type t = int
 
@@ -17,7 +17,7 @@ end = struct
 
   let empty = of_int 0
 
-  let ( == ) a b = a == b
+  let equal a b = a == b
 end
 
 module Edge : sig
@@ -33,7 +33,7 @@ module Edge : sig
 
   val weight : t -> float
 
-  val ( == ) : t -> t -> bool
+  val equal : t -> t -> bool
 end = struct
   type t = {id: Label.t; weight: float}
 
@@ -47,7 +47,7 @@ end = struct
 
   let empty = create (Label.of_int 0)
 
-  let ( == ) a b = a.id == b.id && a.weight == b.weight
+  let equal a b = a.id == b.id && a.weight == b.weight
 
   let%test "create" =
     create (Label.of_int 10) == {id= Label.of_int 10; weight= 0.}
@@ -60,6 +60,8 @@ module type Vertex = sig
   type t
 
   val create : Label.t -> t
+
+  val make : Label.t -> Edge.t list -> t
 
   val label : t -> Label.t
 
@@ -79,6 +81,8 @@ module Vertex_list : Vertex = struct
 
   let create l = {id= l; edges= []}
 
+  let make l edgs = {id= l; edges= edgs}
+
   let label v = v.id
 
   let edge_count v = List.length v.edges
@@ -96,7 +100,7 @@ module Vertex_list : Vertex = struct
   let edges v = v.edges
 
   let empty = create (Label.of_int 0)
-    
+
   let%test_module "Vertex_list" =
     ( module struct
       let edge12 = Edge.create (Label.of_int 12)
@@ -133,6 +137,8 @@ module Vertex_set : Vertex = struct
 
   let create l = {id= l; edges= ref EdgeSet.empty}
 
+  let make l edgs = {id= l; edges= ref (EdgeSet.of_list edgs)}
+
   let remove_edge v e =
     v.edges := EdgeSet.remove e !(v.edges) ;
     v
@@ -147,7 +153,7 @@ module Vertex_set : Vertex = struct
   let edges v = EdgeSet.elements !(v.edges)
 
   let empty = create (Label.of_int 0)
-            
+
   let%test_module "Vertex_set" =
     ( module struct
       let edge12 = Edge.create (Label.of_int 12)
