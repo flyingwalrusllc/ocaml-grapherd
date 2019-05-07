@@ -1,6 +1,6 @@
 open Core
 
-type t = Vertex.Label.t list
+type t = Vertex.Label.t list [@@deriving show]
 
 let append path0 label = path0 @ [label]
 
@@ -18,7 +18,5 @@ let print path =
 
 let print_path_list path_list =
   let _ = Printf.printf "Path list length %d:\n" (List.length path_list) in
-  let _ = Printf.printf "[ " in
-  let _ = List.map path_list ~f:(fun p -> print p) in
-  let _ = Printf.printf " ]\n" in
+  let _ = List.map path_list ~f:(fun p -> show p) in
   ()

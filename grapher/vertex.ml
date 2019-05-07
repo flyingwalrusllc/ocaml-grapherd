@@ -1,5 +1,5 @@
 module Label : sig
-  type t
+  type t [@@deriving show]
 
   val empty : t
 
@@ -9,7 +9,7 @@ module Label : sig
 
   val equal : t -> t -> bool
 end = struct
-  type t = int
+  type t = int [@@deriving show]
 
   let of_int i = i
 
