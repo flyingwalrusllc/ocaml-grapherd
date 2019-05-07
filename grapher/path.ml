@@ -1,16 +1,18 @@
 open Core
-   
+
 type t = Vertex.Label.t list
 
-let append path0 label = path0 @ [label; ]
+let append path0 label = path0 @ [label]
 
-let empty label = [label; ]
+let empty label = [label]
 
-let length path = (List.length path - 1)
+let length path = List.length path - 1
 
 let print path =
   let _ = Printf.printf "\nPath length %d " (List.length path) in
-  let _ = List.map path ~f:(fun l -> Printf.printf "%d -> " (Vertex.Label.to_int l)) in
+  let _ =
+    List.map path ~f:(fun l -> Printf.printf "%d -> " (Vertex.Label.to_int l))
+  in
   let _ = print_endline ";" in
   ()
 
