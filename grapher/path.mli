@@ -1,4 +1,4 @@
-type t
+type t [@@deriving show]
 
 val append : t -> Vertex.Label.t -> t
 
