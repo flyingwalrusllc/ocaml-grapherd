@@ -9,15 +9,13 @@ depends: [
   "ocaml" {>= "4.03"}
   "dune" {build}
   "core"
-  "spaces_common"
   "ppx_deriving"
   "ppx_inline_test"
-  "ppx_expect"
 ]
 build: [
   ["dune" "subst"] {pinned}
   ["dune" "build" "-p" name "-j" jobs]
   ["dune" "runtest" "-p" name "-j" jobs] {with-test}
 ]
-synopsis: "Simple high performance graph engine"
+synopsis: "Common features"
 

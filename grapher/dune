@@ -4,7 +4,7 @@
  (modules grapher vertex graph reachable path)
  (preprocess
   (pps ppx_deriving.show ppx_inline_test ppx_expect))
- (libraries core))
+ (libraries core spaces_common))
 
 (executable
  (name graphtoplevel)

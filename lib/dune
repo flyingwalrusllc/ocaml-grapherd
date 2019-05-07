@@ -1,7 +1,7 @@
 (library
- (name common)
+ (name spaces_common)
  (inline_tests)
- (modules feature_flipper)
+ (modules feature_flipper tag)
  (preprocess
   (pps ppx_inline_test ppx_expect))
  (libraries core))
