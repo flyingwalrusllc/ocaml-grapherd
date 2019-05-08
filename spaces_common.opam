@@ -6,13 +6,12 @@ homepage: "https://github.com/flyingwalrusllc/ocaml-space"
 doc: "http://flyingwalrusllc.github.io/ocaml-space/"
 bug-reports: "https://github.com/flyingwalrusllc/ocaml-space/issues"
 depends: [
-  "ocaml" {>= "4.03"}
+  "ocaml"
   "dune" {build}
   "core"
+  "async"
   "ppx_deriving"
   "ppx_inline_test"
-  "ppx_mysql"
-  "ppx_mysql_identity"
 ]
 build: [
   ["dune" "subst"] {pinned}

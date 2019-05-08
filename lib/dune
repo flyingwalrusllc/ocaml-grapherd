@@ -3,6 +3,5 @@
  (inline_tests)
  (modules feature_flipper tag globals)
  (preprocess
-  (pps ppx_inline_test ppx_mysql))
- (libraries core mysql ppx_mysql.runtime ppx_mysql_identity))
-
+  (pps ppx_inline_test))
+ (libraries core async))
