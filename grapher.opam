@@ -2,13 +2,17 @@ opam-version: "2.0"
 maintainer: "crispywalrus@gmail.com"
 authors: ["Chris Vale"]
 license: "GPL3"
-homepage: "https://github.com/flyingwalrusllc/ocaml-social"
-doc: "http://flyingwalrusllc.github.io/indexer/"
-bug-reports: "https://github.com/flyingwalrusllc/ocaml-social/issues"
+homepage: "https://github.com/flyingwalrusllc/ocaml-space"
+doc: "http://flyingwalrusllc.github.io/ocaml-space/"
+bug-reports: "https://github.com/flyingwalrusllc/ocaml-space/issues"
 depends: [
   "ocaml" {>= "4.03"}
   "dune" {build}
-  "ounit" {with-test}
+  "core"
+  "spaces_common"
+  "ppx_deriving"
+  "ppx_inline_test"
+  "ppx_expect"
 ]
 build: [
   ["dune" "subst"] {pinned}

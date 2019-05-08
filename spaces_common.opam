@@ -2,19 +2,22 @@ opam-version: "2.0"
 maintainer: "crispywalrus@gmail.com"
 authors: ["Chris Vale"]
 license: "GPL3"
-homepage: "https://github.com/flyingwalrusllc/ocaml-social"
-doc: "http://flyingwalrusllc.github.io/ocaml-social/"
-bug-reports: "https://github.com/flyingwalrusllc/ocaml-social/issues"
+homepage: "https://github.com/flyingwalrusllc/ocaml-space"
+doc: "http://flyingwalrusllc.github.io/ocaml-space/"
+bug-reports: "https://github.com/flyingwalrusllc/ocaml-space/issues"
 depends: [
   "ocaml" {>= "4.03"}
   "dune" {build}
-  "spaces_common"
   "core"
+  "ppx_deriving"
+  "ppx_inline_test"
+  "ppx_mysql"
+  "ppx_mysql_identity"
 ]
 build: [
   ["dune" "subst"] {pinned}
   ["dune" "build" "-p" name "-j" jobs]
   ["dune" "runtest" "-p" name "-j" jobs] {with-test}
 ]
-synopsis: "Request Manager"
+synopsis: "Common features"
 
