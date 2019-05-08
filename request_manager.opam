@@ -8,6 +8,7 @@ bug-reports: "https://github.com/flyingwalrusllc/ocaml-social/issues"
 depends: [
   "ocaml" {>= "4.03"}
   "dune" {build}
+  "spaces_common"
   "core"
 ]
 build: [

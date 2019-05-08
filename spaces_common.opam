@@ -11,6 +11,8 @@ depends: [
   "core"
   "ppx_deriving"
   "ppx_inline_test"
+  "ppx_mysql"
+  "ppx_mysql_identity"
 ]
 build: [
   ["dune" "subst"] {pinned}
