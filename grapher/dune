@@ -3,12 +3,6 @@
  (inline_tests)
  (modules grapher vertex graph reachable path)
  (preprocess
-  (pps ppx_deriving.show ppx_inline_test ppx_mysql))
- (libraries core spaces_common ppx_mysql.runtime ppx_mysql_identity))
+  (pps ppx_deriving.show ppx_inline_test))
+ (libraries core spaces_common))
 
-(executable
- (name graphtoplevel)
- (modules graphtoplevel)
- (libraries compiler-libs.toplevel grapher)
- (link_flags (-linkall))
- (modes byte))
