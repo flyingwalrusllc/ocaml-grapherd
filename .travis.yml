@@ -6,7 +6,8 @@ script: bash -ex .travis-opam.sh
 sudo: true
 env:
   global:
+  - PACKAGE=spaces_common
   - PACKAGE=grapher
+  - PACKAGE=request_manager
   matrix:
-  - OCAML_VERSION=4.06
   - OCAML_VERSION=4.07
