@@ -7,13 +7,13 @@ type t [@@deriving show]
 val empty : t
 (** the empty edge *)
 
-val create : ?weight:float -> ?props:(Property.t list) -> Label.t -> t
+val create : ?weight:Weight.t -> ?props:(Property.t list) -> Label.t -> t
 (** all edges have labels which are the id's of other vertices *)
 
 val label : t -> Label.t
 (** extract this edges label *)
 
-val weight : t -> float
+val weight : t -> Weight.t
 (** extract this edges weight *)
 
 val properties : t -> Property.t list

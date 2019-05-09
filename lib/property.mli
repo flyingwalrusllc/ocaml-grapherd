@@ -1,7 +1,7 @@
 (** for graphs where edges have properties this module is the type and
    operations on that property type *)
 
-type t [@@deriving show]
+type t [@@deriving show, yojson]
 (** whatever a property is actually represented by is obscured by this type *)
 
 val of_int : int -> t

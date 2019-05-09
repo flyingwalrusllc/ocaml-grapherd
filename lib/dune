@@ -1,7 +1,7 @@
 (library
  (name grapher)
  (inline_tests)
- (modules grapher vertex graph label edge reachable path property)
+ (modules grapher vertex graph label edge reachable path property weight)
  (preprocess
-  (pps ppx_deriving.show ppx_inline_test))
+  (pps ppx_deriving.show ppx_deriving_yojson ppx_inline_test))
  (libraries core))

@@ -1,10 +1,10 @@
 open Core
    
-type t = int [@@deriving show]
+type t = int [@@deriving show, yojson]
 
-let of_int i = i
+let of_int p = p
 
-let to_int l = l
+let to_int p = p
 
 let equal a b =
   Int.equal (to_int a) (to_int b)
