@@ -7,7 +7,7 @@ type t [@@deriving show]
 val empty : t
 (** the empty edge *)
 
-val create : ?weight:Weight.t -> ?props:(Property.t list) -> Label.t -> t
+val create : ?weight:Weight.t -> ?props:Property.t list -> Label.t -> t
 (** all edges have labels which are the id's of other vertices *)
 
 val label : t -> Label.t
@@ -21,4 +21,3 @@ val properties : t -> Property.t list
 
 val equal : t -> t -> bool
 (** do these two edges have the same label? *)
-                        

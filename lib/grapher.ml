@@ -7,20 +7,24 @@ let all_shortest_paths graph start target distance =
   let limit =
     if Reachable.compare distance max_k > 0 then max_k else distance
   in
-  let rec next candidate path found =
+  let rec loop candidate path found =
     let labels = S.edge_labels graph candidate in
-    let depth = Path.length path in
-    if Reachable.compare (Reachable.of_int depth) limit > 0 then found
+    let depth = Reachable.of_int (Path.length path) in
+    if Reachable.compare depth limit > 0 then found
     else
       List.concat
         (List.map labels ~f:(fun l ->
-             if l <> start then
-               let target_path = Path.append path l in
-               if Label.equal l target then target_path :: found
-               else next l target_path found
+             if not (Label.equal l start) then
+               let found_path = Path.append path l in
+               if Label.equal l target then
+                 let ff = found_path :: found in
+                 ff
+               else
+                 let fl = loop l found_path found in
+                 fl
              else found ))
   in
-  next start (Path.empty start) []
+  loop start (Path.empty start) []
 
 let k_reachable graph start k =
   let depth = if Reachable.compare k max_k > 0 then max_k else k in

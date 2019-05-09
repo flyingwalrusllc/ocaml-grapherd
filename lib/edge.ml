@@ -3,33 +3,25 @@ type t =
   | Valid of {id: Label.t; weight: Weight.t; properties: Property.t list}
 [@@deriving show, yojson]
 
-let label e =
-  match e with
-  | Empty ->
-      Label.empty
-  | Valid l ->
-      l.id
+let label e = match e with Empty -> Label.empty | Valid l -> l.id
 
-let weight e = match e with
-  | Empty -> Weight.empty
-  | Valid r -> r.weight
+let weight e = match e with Empty -> Weight.empty | Valid r -> r.weight
 
-let properties e =
-  match e with
-  | Empty ->
-      []
-  | Valid r ->
-      r.properties
+let properties e = match e with Empty -> [] | Valid r -> r.properties
 
 let create ?(weight = Weight.empty) ?(props = []) l =
-  Valid { id= l; weight= weight; properties= props; }
+  Valid {id= l; weight; properties= props}
 
 let empty = Empty
 
-let equal a b = match (a, b) with
-  | (Empty, Empty) -> true
-  | (Valid x, Valid y) -> Label.equal x.id y.id
-  | (_, _) -> false
+let equal a b =
+  match (a, b) with
+  | Empty, Empty ->
+      true
+  | Valid x, Valid y ->
+      Label.equal x.id y.id
+  | _, _ ->
+      false
 
 let%test_module _ =
   ( module struct
