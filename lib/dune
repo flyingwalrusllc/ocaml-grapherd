@@ -1,7 +1,7 @@
 (library
- (name spaces_common)
+ (name grapher)
  (inline_tests)
- (modules feature_flipper tag globals)
+ (modules grapher vertex graph label edge reachable path property)
  (preprocess
-  (pps ppx_inline_test))
- (libraries core async))
+  (pps ppx_deriving.show ppx_inline_test))
+ (libraries core))

@@ -1,20 +1,14 @@
-From ocaml/opam2:alpine
+From ocaml/opam2:ubuntu
 
-Run sudo apk update && \
-        sudo apk add m4 && \
-        sudo apk add mariadb mariadb-client && \
-        sudo apk add mariadb-dev && \
-        sudo apk add linux-headers && \
-        sudo apk add emacs-nox
+Run sudo apt-get -y update && \
+        sudo apt-get -y upgrade && \
+        sudo apt-get -y install m4 && \
+        sudo apt-get -y install postgresql-11 postgresql-server-dev-11 && \
+        sudo apt-get -y install linux-headers-generic
 
 Run cd /home/opam/opam-repository && \
         git pull && \
         opam update && \
         opam upgrade && \
-        opam install merlin tuareg core async ppx_inline_test ppx_deriving mysql ppx_mysql ppx_mysql_identity httpaf httpaf-async
+        opam install core async ppx_inline_test ppx_deriving httpaf httpaf-async
 
-Run sudo mkdir -p /run/mysqld && \
-        sudo chown -R mysql:mysql /run/mysqld && \
-        sudo mkdir -p /var/lib/mysql && \
-        sudo chown -R mysql:mysql /var/lib/mysql && \
-        sudo -u mysql mysql_install_db --datadir=/var/lib/mysql
