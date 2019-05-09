@@ -72,39 +72,57 @@ module Make_graph (V : Vertex.Vertex) : Graph = struct
     DynArray.of_array ar
 
   let edges g l =
-    let _ = grow g (Label.to_int l) in
-    V.edges (DynArray.get g (Label.to_int l))
+    match Label.to_int l with
+    | Some x ->
+        let _ = grow g x in
+        V.edges (DynArray.get g x)
+    | None ->
+        []
 
   let edge_labels graph label =
     List.map (edges graph label) ~f:(fun e -> Edge.label e)
 
-  let label g l = V.label (DynArray.get g (Label.to_int l))
+  let label g l =
+    match Label.to_int l with
+    | Some x ->
+        V.label (DynArray.get g x)
+    | None ->
+        Label.empty
 
   let get g idx = DynArray.get g idx
 
   let add_edge g label edge =
-    let idx = Label.to_int label in
-    let _ = grow g idx in
-    let v = DynArray.get g idx in
-    DynArray.set g idx (V.add_edge v edge)
+    match Label.to_int label with
+    | Some idx ->
+        let _ = grow g idx in
+        let v = DynArray.get g idx in
+        DynArray.set g idx (V.add_edge v edge)
+    | None ->
+        ()
 
   let add_edges g label edges =
-    let idx = Label.to_int label in
-    let _ = grow g idx in
-    let v = DynArray.get g idx in
-    let _ = List.map edges ~f:(fun e -> V.add_edge v e) in
-    ()
+    match Label.to_int label with
+    | Some idx ->
+        let _ = grow g idx in
+        let v = DynArray.get g idx in
+        let _ = List.map edges ~f:(fun e -> V.add_edge v e) in
+        ()
+    | None ->
+        ()
 
   let remove_edge graph label =
-    let idx = Label.to_int label in
-    let _ = grow graph idx in
-    let v = DynArray.get graph idx in
-    let filtered =
-      List.filter (V.edges v) ~f:(fun e ->
-          not (Label.equal label (Edge.label e)) )
-    in
-    let _ = DynArray.set graph idx (V.make label filtered) in
-    ()
+    match Label.to_int label with
+    | Some idx ->
+        let _ = grow graph idx in
+        let v = DynArray.get graph idx in
+        let filtered =
+          List.filter (V.edges v) ~f:(fun e ->
+              not (Label.equal label (Edge.label e)) )
+        in
+        let _ = DynArray.set graph idx (V.make label filtered) in
+        ()
+    | None ->
+        ()
 
   let length g = DynArray.length g
 end

@@ -1,38 +1,27 @@
 type t =
   | Empty
-  | Valid of {id: Label.t; weight: float; properties: Property.t list}
-[@@deriving show]
+  | Valid of {id: Label.t; weight: Weight.t; properties: Property.t list}
+[@@deriving show, yojson]
 
-let label e =
-  match e with
-  | Empty ->
-      Label.empty
-  | Valid l ->
-      l.id
+let label e = match e with Empty -> Label.empty | Valid l -> l.id
 
-let weight e =
-  match e with
-  | Empty ->
-      0.
-  | Valid r ->
-      r.weight
+let weight e = match e with Empty -> Weight.empty | Valid r -> r.weight
 
-let properties e =
-  match e with
-  | Empty ->
-      []
-  | Valid r ->
-      r.properties
+let properties e = match e with Empty -> [] | Valid r -> r.properties
 
-let create ?(weight = 0.) ?(props = []) l =
-  Valid { id= l; weight= weight; properties= props; }
+let create ?(weight = Weight.empty) ?(props = []) l =
+  Valid {id= l; weight; properties= props}
 
 let empty = Empty
 
-let equal a b = match (a, b) with
-  | (Empty, Empty) -> true
-  | (Valid x, Valid y) -> Label.equal x.id y.id
-  | (_, _) -> false
+let equal a b =
+  match (a, b) with
+  | Empty, Empty ->
+      true
+  | Valid x, Valid y ->
+      Label.equal x.id y.id
+  | _, _ ->
+      false
 
 let%test_module _ =
   ( module struct
@@ -44,9 +33,9 @@ let%test_module _ =
 
     let lbl11 = create eleven
 
-    let wght10 = create ten ~weight:1.
+    let wght10 = create ten ~weight:(Weight.of_float 1.)
 
-    let wght11 = create eleven ~weight:1.
+    let wght11 = create eleven ~weight:(Weight.of_float 1.)
 
     let clr10 = create ten ~props:[Property.of_int 1]
 
