@@ -1,3 +1,3 @@
 (lang dune 1.8)
-(name ocaml-space)
+(name grapherd)
 (using fmt 1.1)

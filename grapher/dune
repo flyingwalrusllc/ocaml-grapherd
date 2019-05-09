@@ -1,8 +1,0 @@
-(library
- (name grapher)
- (inline_tests)
- (modules grapher vertex graph reachable path)
- (preprocess
-  (pps ppx_deriving.show ppx_inline_test))
- (libraries core spaces_common))
-

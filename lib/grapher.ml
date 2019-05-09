@@ -16,7 +16,7 @@ let all_shortest_paths graph start target distance =
         (List.map labels ~f:(fun l ->
              if l <> start then
                let target_path = Path.append path l in
-               if Vertex.Label.equal l target then target_path :: found
+               if Label.equal l target then target_path :: found
                else next l target_path found
              else found ))
   in
@@ -29,7 +29,7 @@ let k_reachable graph start k =
         List.append (S.edge_labels graph label) acc )
   in
   let rec loop graph labels cur_depth depth reachable =
-    if (Reachable.compare cur_depth depth) >= 0 then reachable
+    if Reachable.compare cur_depth depth >= 0 then reachable
     else
       let ll =
         List.map labels ~f:(fun label ->
@@ -47,40 +47,41 @@ let k_reachable graph start k =
 
 let%test_module _ =
   ( module struct
+    (* simple sample data to make sure things generally work *)
+    let v =
+      [ ( Label.of_int 10
+        , [ Edge.create (Label.of_int 12)
+          ; Edge.create (Label.of_int 15)
+          ; Edge.create (Label.of_int 17) ] )
+      ; ( Label.of_int 12
+        , [ Edge.create (Label.of_int 5)
+          ; Edge.create (Label.of_int 8)
+          ; Edge.create (Label.of_int 10)
+          ; Edge.create (Label.of_int 11) ] )
+      ; ( Label.of_int 15
+        , [ Edge.create (Label.of_int 10)
+          ; Edge.create (Label.of_int 18)
+          ; Edge.create (Label.of_int 24)
+          ; Edge.create (Label.of_int 11) ] )
+      ; ( Label.of_int 11
+        , [ Edge.create (Label.of_int 2)
+          ; Edge.create (Label.of_int 4)
+          ; Edge.create (Label.of_int 12)
+          ; Edge.create (Label.of_int 15) ] ) ]
 
-      (* simple sample data to make sure things generally work *)
-      let v = [ ((Vertex.Label.of_int 10), [ Vertex.Edge.create (Vertex.Label.of_int 12)
-                                           ; Vertex.Edge.create (Vertex.Label.of_int 15)
-                                           ; Vertex.Edge.create (Vertex.Label.of_int 17) ])
-              ; ((Vertex.Label.of_int 12), [ Vertex.Edge.create (Vertex.Label.of_int 5)
-                                           ; Vertex.Edge.create (Vertex.Label.of_int 8)
-                                           ; Vertex.Edge.create (Vertex.Label.of_int 10)
-                                           ; Vertex.Edge.create (Vertex.Label.of_int 11) ])
-              ; ((Vertex.Label.of_int 15), [ Vertex.Edge.create (Vertex.Label.of_int 10)
-                                           ; Vertex.Edge.create (Vertex.Label.of_int 18)
-                                           ; Vertex.Edge.create (Vertex.Label.of_int 24)
-                                           ; Vertex.Edge.create (Vertex.Label.of_int 11) ])
-              ; ((Vertex.Label.of_int 11), [ Vertex.Edge.create (Vertex.Label.of_int 2)
-                                           ; Vertex.Edge.create (Vertex.Label.of_int 4)
-                                           ; Vertex.Edge.create (Vertex.Label.of_int 12)
-                                           ; Vertex.Edge.create (Vertex.Label.of_int 15) ])
-              ]
-              
     let graph =
       let s = S.create 25 in
       let _ = List.map v ~f:(fun (vert, edges) -> S.add_edges s vert edges) in
       s
 
     let%test "check_all_shortest_paths" =
-      let start = Vertex.Label.of_int 10 in
-      let target = Vertex.Label.of_int 11 in
+      let start = Label.of_int 10 in
+      let target = Label.of_int 11 in
       let depth = Reachable.of_int 3 in
       let paths = all_shortest_paths graph start target depth in
       Int.equal (List.length paths) 2
 
     let%test "check_k_reachable" =
-      let kr =
-        k_reachable graph (Vertex.Label.of_int 10) (Reachable.of_int 2)
-      in
+      let kr = k_reachable graph (Label.of_int 10) (Reachable.of_int 2) in
       Int.equal (Array.length kr) 3
   end )

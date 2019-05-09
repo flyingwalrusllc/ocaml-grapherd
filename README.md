@@ -1,5 +1,4 @@
-# OcamlSpace
+# Grapherd
 
-This is not a product, it's only meant to give it's author a place to
-write some code that might end up taking the general shape of a social
-network.
+A super simple graph db with a few builtin algorithms. Or you could
+link in (or load) the library and build your own.
