@@ -1,5 +1,5 @@
 module type Vertex = sig
-  type t
+  type t [@@deriving show, yojson]
 
   val create : Label.t -> t
 
@@ -19,7 +19,7 @@ module type Vertex = sig
 end
 
 module Vertex_list : Vertex = struct
-  type t = {id: Label.t; mutable edges: Edge.t list}
+  type t = {id: Label.t; mutable edges: Edge.t list} [@@deriving show, yojson]
 
   let create l = {id= l; edges= []}
 
@@ -75,6 +75,45 @@ module Vertex_set : Vertex = struct
 
   type t = {id: Label.t; edges: EdgeSet.t ref}
 
+  let of_yojson (json : Yojson.Safe.t): (t, string) Result.result =
+    let open Core in 
+    let t_opt = match json with
+      | `Assoc alist ->
+         let id_opt = List.Assoc.find ~equal:String.equal alist "id" in
+         let edges_opt = List.Assoc.find alist ~equal:String.equal "edges" in
+         Option.map2 id_opt edges_opt ~f:(fun l e ->
+             let id = match Label.of_yojson l with
+               | Ok lbl -> lbl
+               | Error _ -> Label.empty
+             in
+             let edges =
+               match e with
+               | `List le -> 
+                  List.map le ~f:(fun j ->
+                      match Edge.of_yojson j with
+                      | Ok edg -> edg
+                      | Error _ -> Edge.empty)
+               | _ -> []
+             in
+             {id= id;edges= ref (EdgeSet.of_list edges);})
+      | _ -> None
+    in
+    Result.of_option t_opt ~error:"foobar"
+
+       
+  let to_yojson t =
+    let open Core in
+    `Assoc
+      [ ("id", Label.to_yojson t.id)
+      ; ( "edges"
+        , `List
+            (List.map (EdgeSet.elements !(t.edges)) ~f:(fun elt ->
+                 Edge.to_yojson elt )) ) ]
+
+  let pp _ _ = ()
+
+  let show _ = ""
+
   let label v = v.id
 
   let create l = {id= l; edges= ref EdgeSet.empty}
@@ -115,6 +154,23 @@ module Vertex_set : Vertex = struct
 
       let%test "count_after_add" = edge_count v == 1
 
+      let%test "serialize" =
+        let open Core in
+        let str = Yojson.Safe.to_string (to_yojson v) in
+        let round = of_yojson (Yojson.Safe.from_string str) in
+        let _ = Printf.printf "## serialized vertex %s" str in
+           match round with
+           | Ok good ->
+              let pairs = List.zip (edges v) (edges good) in
+              let p = match pairs with
+              | Some pp -> List.fold_left pp ~init:false ~f:(fun _ p ->
+                          match p with
+                          | (a, b) -> Edge.equal a b)
+              | None -> false
+              in
+              Label.equal (label v) (label good) && p
+           | Error _ -> false
+                
       let _ = remove_edge v edge12
 
       let%test "remove_edge" =

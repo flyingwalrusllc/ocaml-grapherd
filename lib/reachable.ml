@@ -1,6 +1,6 @@
 open Core
 
-type t = int [@@deriving show, yojson]
+type t = int [@@deriving show, eq]
 
 (** [of_int i] lift an int into a Reachable *)
 let of_int i = i

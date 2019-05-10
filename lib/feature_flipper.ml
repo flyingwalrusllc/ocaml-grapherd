@@ -1,6 +1,6 @@
 open Core
 
-type t = {name: string; percent: float; id: int} [@@deriving show, yojson]
+type t = {name: string; percent: float; id: int} [@@deriving show]
 
 let create name percent id = {name; percent; id}
 

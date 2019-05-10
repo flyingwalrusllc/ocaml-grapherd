@@ -1,4 +1,4 @@
-type t [@@deriving show]
+type t [@@deriving show, eq]
 
 val of_int : int -> t
 

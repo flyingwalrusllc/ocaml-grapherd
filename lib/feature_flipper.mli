@@ -1,4 +1,4 @@
-type t [@@deriving show, yojson]
+type t [@@deriving show]
 
 val create : string -> float -> int -> t
 
