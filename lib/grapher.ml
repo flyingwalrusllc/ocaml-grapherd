@@ -1,5 +1,5 @@
 open Core
-module S = Graph.Make_graph (Vertex.Vertex_set)
+module S = Graph.Make_graph (Vertex.Vertex_list)
 
 let max_k = Reachable.of_int 4
 

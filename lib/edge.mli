@@ -2,7 +2,7 @@
    graph is undirected then when adding an edge it needs to be added
    to the target and recipient both *)
 
-type t [@@deriving show]
+type t [@@deriving show, yojson]
 
 val empty : t
 (** the empty edge *)
@@ -21,3 +21,6 @@ val properties : t -> Property.t list
 
 val equal : t -> t -> bool
 (** do these two edges have the same label? *)
+
+val compare : t -> t -> int
+(** compare by label *)

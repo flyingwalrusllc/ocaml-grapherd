@@ -7,4 +7,6 @@ val to_int : t -> int option
 
 val equal : t -> t -> bool
 
+val compare : t -> t -> int
+
 val empty : t

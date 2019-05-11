@@ -1,6 +1,6 @@
 open Core
 
-type t = {id: int; tag: string; count: int}
+type t = {id: int; tag: string; count: int} [@@deriving show]
 
 let tag_cloud = Hashtbl.create (module String)
 

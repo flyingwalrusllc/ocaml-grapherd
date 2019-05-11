@@ -119,7 +119,7 @@ module Make_graph (V : Vertex.Vertex) : Graph = struct
           List.filter (V.edges v) ~f:(fun e ->
               not (Label.equal label (Edge.label e)) )
         in
-        let _ = DynArray.set graph idx (V.make label filtered) in
+        let _ = DynArray.set graph idx (V.create label ~edges:filtered) in
         ()
     | None ->
         ()

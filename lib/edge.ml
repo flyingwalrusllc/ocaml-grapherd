@@ -1,3 +1,5 @@
+open Core
+
 type t =
   | Empty
   | Valid of {id: Label.t; weight: Weight.t; properties: Property.t list}
@@ -14,14 +16,18 @@ let create ?(weight = Weight.empty) ?(props = []) l =
 
 let empty = Empty
 
-let equal a b =
+let compare a b =
   match (a, b) with
   | Empty, Empty ->
-      true
+      0
   | Valid x, Valid y ->
-      Label.equal x.id y.id
-  | _, _ ->
-      false
+      Label.compare x.id y.id
+  | Valid _, Empty ->
+      1
+  | Empty, Valid _ ->
+      -1
+
+let equal a b = Int.equal (compare a b) 0
 
 let%test_module _ =
   ( module struct
@@ -31,13 +37,13 @@ let%test_module _ =
 
     let lbl10 = create ten
 
-    let lbl11 = create eleven
-
     let wght10 = create ten ~weight:(Weight.of_float 1.)
 
-    let wght11 = create eleven ~weight:(Weight.of_float 1.)
-
     let clr10 = create ten ~props:[Property.of_int 1]
+
+    let lbl11 = create eleven
+
+    let wght11 = create eleven ~weight:(Weight.of_float 1.)
 
     let clr11 = create eleven ~props:[Property.of_int 1]
 

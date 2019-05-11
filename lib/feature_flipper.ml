@@ -1,6 +1,6 @@
 open Core
 
-type t = {name: string; percent: float; id: int} [@@deriving show, yojson]
+type t = {name: string; percent: float; id: int} [@@deriving show]
 
 let create name percent id = {name; percent; id}
 
@@ -18,5 +18,4 @@ let%test "features" =
     if z > 0 then testy z wins else wins
   in
   let winners = testy 1000 0 in
-  let _ = Printf.printf "got %d winners" winners in
   winners >= 300 && winners <= 350
