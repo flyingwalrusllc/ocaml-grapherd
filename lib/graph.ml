@@ -119,7 +119,7 @@ module Make_graph (V : Vertex.Vertex) : Graph = struct
           List.filter (V.edges v) ~f:(fun e ->
               not (Label.equal label (Edge.label e)) )
         in
-        let _ = DynArray.set graph idx (V.make label filtered) in
+        let _ = DynArray.set graph idx (V.create label ~edges:filtered) in
         ()
     | None ->
         ()
@@ -154,29 +154,29 @@ let%test_module "list_vertex_graph" =
       Int.equal len 40
   end )
 
-(* let%test_module "set_vertex_graph" =
- *   ( module struct
- *     module S = Make_graph (Vertex.Vertex_set)
- * 
- *     let%test "create" =
- *       let graph = S.create 100 in
- *       let es = S.edges graph (Label.of_int 99) in
- *       Int.equal (List.length es) 0
- * 
- *     let%test "created_is_labeled" =
- *       let graph = S.create 100 in
- *       let rec check idx =
- *         let label = Label.of_int idx in
- *         if S.length graph < idx then
- *           let v_label = S.label graph (Label.of_int idx) in
- *           if Label.equal label v_label then check (idx + 1) else false
- *         else true
- *       in
- *       check 0
- * 
- *     let%test "graph_grows" =
- *       let graph = S.create 10 in
- *       let _ = S.edges graph (Label.of_int 20) in
- *       let len = S.length graph in
- *       Int.equal len 40
- *   end ) *)
+let%test_module "set_vertex_graph" =
+  ( module struct
+    module S = Make_graph (Vertex.Vertex_set)
+
+    let%test "create" =
+      let graph = S.create 100 in
+      let es = S.edges graph (Label.of_int 99) in
+      Int.equal (List.length es) 0
+
+    let%test "created_is_labeled" =
+      let graph = S.create 100 in
+      let rec check idx =
+        let label = Label.of_int idx in
+        if S.length graph < idx then
+          let v_label = S.label graph (Label.of_int idx) in
+          if Label.equal label v_label then check (idx + 1) else false
+        else true
+      in
+      check 0
+
+    let%test "graph_grows" =
+      let graph = S.create 10 in
+      let _ = S.edges graph (Label.of_int 20) in
+      let len = S.length graph in
+      Int.equal len 40
+  end )
