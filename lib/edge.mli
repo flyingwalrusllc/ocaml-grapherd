@@ -2,6 +2,8 @@
    graph is undirected then when adding an edge it needs to be added
    to the target and recipient both *)
 
+(** An edge is a label with some other data need for various graph
+   traversals. *)
 type t [@@deriving show, yojson]
 
 val empty : t
@@ -23,4 +25,10 @@ val equal : t -> t -> bool
 (** do these two edges have the same label? *)
 
 val compare : t -> t -> int
-(** compare by label *)
+(** [compare a b] compare two edges.
+
+ Edge identity is based on label. If the labels are the same then it's
+ the same edge even if the weights and/or
+ properties differ.The empty edge only
+ equals itself and is less than all other
+ edges *)

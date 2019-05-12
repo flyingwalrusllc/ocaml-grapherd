@@ -1,10 +1,10 @@
 open Core
 
-type t = {name: string; percent: float; id: int} [@@deriving show]
+type t = {name: string; percent: float; id: int; description: string} [@@deriving show]
 
-let create name percent id = {name; percent; id}
+let create name percent id description = {name; percent; id; decscription; }
 
-let update feature percent = {name= feature.name; percent; id= feature.id}
+let update feature percent = {name= feature.name; percent; id= feature.id; description= feature.description; }
 
 let feature feature = feature.percent >= Random.float 1.0
 
