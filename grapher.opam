@@ -9,7 +9,6 @@ depends: [
   "ocaml" {>= "4.03"}
   "dune" {build}
   "core"
-  "spaces_common"
   "ppx_deriving"
   "ppx_inline_test"
 ]

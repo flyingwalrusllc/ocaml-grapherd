@@ -1,3 +1,11 @@
+(library
+ (name graph_api)
+ (inline_tests)
+ (modules graph_api)
+ (preprocess (pps ppx_inline_test))
+ (libraries grapher))
+  
 (executable
  (name grapherd)
- (libraries httpaf httpaf-async async))
+ (modules grapherd)
+ (libraries httpaf httpaf-async async graph_api))
