@@ -1,7 +1,7 @@
 open Core
 open Grapher
    
-module S = Graph.Make_graph (Vertex.Vertex_list)
+module S = Graph.Make (Vertex.Vertex_list)
 
 let max_k = Reachable.of_int 4
 
