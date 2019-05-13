@@ -1,0 +1,28 @@
+* Ocaml-Grapherd
+** An ocaml port of the classic grapherd
+This leads to some mismatches. Grapherd uses arrays to manage the
+graph itself and to manage edges in the struct that represents vertex
+information. That's a pretty imperative design to be starting with. It
+does however use higher-order-functions as it's mechanism for graph
+algorithms so that's going to work out well. Also classic grapherd had
+a very specific binary protocol that makes little sense to replicate
+(as there are no protocol clients anymore) so there's some questions
+left about how to manage the API. I'm currently torn between Ajax
+(http/json) (easy, universal), janestreet ocaml rpc (easy but
+seemingly ocaml specific), Grpc (http2/protobuf), or Thrift.
+*** grapher lib
+just a graph with vertexes as sets of edges. all the id's being
+wrapped in label. this is simple and clear but wrapping means
+overhead. Both boxing/unboxing and preventing the use of Bigarray as
+the underlying graph/edge collection type.
+*** grapherd
+unstarted really
+*** docker
+some work on building a docker CI container has been done but in the
+fullness of time it needs to be grown to be a full CI/CD system that
+can deliver a container. So work is needes
+*** CI
+I tried with travis-ci and failed. Failed miserably. The project
+builds successfully locally and in my CI container running both alpine
+and ubuntu. Maybe its just me but "dune build grapherd/grapherdexe
+@runtest" should work seamlessly and shouldn't take 15 minutes.

@@ -1,26 +1,25 @@
 open Core
 
-module type Vertex = sig
+module type S = sig
   type t [@@deriving show, yojson]
 
   val create : ?edges:Edge.t list -> Label.t -> t
 
   val label : t -> Label.t
 
-  val edge_count : t -> int
+  val length : t -> int
 
-  val add_edge : t -> Edge.t -> t
+  val add : t -> Edge.t -> t
 
-  val add_edges : t -> Edge.t list -> t
+  val add_all : t -> Edge.t list -> t
 
-  val remove_edge : t -> Label.t -> t
+  val remove : t -> Label.t -> t
 
   val edges : t -> Edge.t list
 
-  val empty : t
 end
 
-module Vertex_list : Vertex = struct
+module Vertex_list : S = struct
   type t = {id: Label.t; mutable edges: Edge.t list} [@@deriving show, yojson]
 
   let create ?(edges = []) l = {id= l; edges}
@@ -29,24 +28,22 @@ module Vertex_list : Vertex = struct
 
   let edges v = v.edges
 
-  let edge_count v = List.length v.edges
+  let length v = List.length v.edges
 
-  let add_edges v le =
+  let add_all v le =
     let new_edges = List.append le v.edges in
     let _ = v.edges <- new_edges in
     v
 
-  let add_edge v e = add_edges v [e]
+  let add v e = add_all v [e]
 
-  let remove_edge v l =
+  let remove v l =
     let edges = edges v in
     let n =
       List.filter edges ~f:(fun edge -> not (Label.equal l (Edge.label edge)))
     in
     v.edges <- n ;
     v
-
-  let empty = create (Label.of_int 0)
 
   let%test_module "Vertex_list" =
     ( module struct
@@ -64,26 +61,26 @@ module Vertex_list : Vertex = struct
 
       let%test "create" = Label.equal (label v) label10
 
-      let _ = add_edge v edge12
+      let _ = add v edge12
 
-      let%test "add_edge" =
+      let%test "add" =
         let should_be = create ~edges:[edge12] label10 in
         Int.equal (Pervasives.compare v should_be) 0
 
-      let%test "count_after_add" = Int.equal (edge_count v) 1
+      let%test "count_after_add" = Int.equal (length v) 1
 
-      let%test "remove_edge" =
-        let _ = remove_edge v label12 in
-        Int.equal (edge_count v) 0
+      let%test "remove edge" =
+        let _ = remove v label12 in
+        Int.equal (length v) 0
 
       let%test "add_another_edge" =
-        let _ = add_edges v [edge08; edge12] in
+        let _ = add_all v [edge08; edge12] in
         let should = create ~edges:[edge08; edge12] label10 in
         Int.equal (Pervasives.compare v should) 0
     end )
 end
 
-module Vertex_set : Vertex = struct
+module Vertex_set : S = struct
   module EdgeSet = Caml.Set.Make (struct
     let compare = Caml.compare
 
@@ -142,25 +139,23 @@ module Vertex_set : Vertex = struct
 
   let create ?(edges = []) l = {id= l; edges= ref (EdgeSet.of_list edges)}
 
-  let remove_edge v l =
+  let remove v l =
     v.edges := EdgeSet.remove (Edge.create l) !(v.edges) ;
     v
 
-  let add_edge v e =
+  let add v e =
     let edges = EdgeSet.add e !(v.edges) in
     v.edges := edges ;
     v
 
-  let add_edges v le =
+  let add_all v le =
     let edges = EdgeSet.union (EdgeSet.of_list le) !(v.edges) in
     v.edges := edges ;
     v
 
-  let edge_count v = List.length (EdgeSet.elements !(v.edges))
+  let length v = List.length (EdgeSet.elements !(v.edges))
 
   let edges v = EdgeSet.elements !(v.edges)
-
-  let empty = create (Label.of_int 0)
 
   let%test_module "Vertex_set" =
     ( module struct
@@ -178,25 +173,25 @@ module Vertex_set : Vertex = struct
 
       let%test "create" = Label.equal (label v) label10
 
-      let _ = add_edge v edge12
+      let _ = add v edge12
 
-      let%test "add_edge" =
+      let%test "add" =
         let should_be = create ~edges:[edge12] label10 in
         Int.equal (Pervasives.compare v should_be) 0
 
-      let%test "count_after_add" = Int.equal (edge_count v) 1
+      let%test "count_after_add" = Int.equal (length v) 1
 
-      let%test "remove_edge" =
-        let _ = remove_edge v label12 in
-        Int.equal (edge_count v) 0
+      let%test "remove edge" =
+        let _ = remove v label12 in
+        Int.equal (length v) 0
 
       let%test "add_another_edge" =
-        let _ = add_edges v [edge08; edge12] in
+        let _ = add_all v [edge08; edge12] in
         let should = create ~edges:[edge08; edge12] label10 in
         Int.equal (Pervasives.compare v should) 0
 
-      let%test "remove_edge" =
-        let _ = remove_edge v label12 in
+      let%test "remove" =
+        let _ = remove v label12 in
         let should = create label10 ~edges:[edge08] in
         Int.equal (Pervasives.compare v should) 0
 
@@ -224,3 +219,4 @@ module Vertex_set : Vertex = struct
             false
     end )
 end
+

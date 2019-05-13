@@ -30,7 +30,7 @@ module type Graph = sig
   val length : t -> int
 end
 
-module Make_graph (V : Vertex.Vertex) : Graph = struct
+module Make (V : Vertex.S) : Graph = struct
   type elt = V.t
 
   (* the problem with this is that there's no control around of
@@ -129,7 +129,7 @@ module Make_graph (V : Vertex.Vertex) : Graph = struct
     | Some idx ->
         let _ = grow g idx in
         let v = GrowableArray.get g idx in
-        let _ = GrowableArray.set g idx (V.add_edge v edge) in
+        let _ = GrowableArray.set g idx (V.add v edge) in
         Ok ()
     | None ->
         Error invalid_vertex
@@ -139,7 +139,7 @@ module Make_graph (V : Vertex.Vertex) : Graph = struct
     | Some idx ->
         let _ = grow g idx in
         let v = GrowableArray.get g idx in
-        let _ = List.map edges ~f:(fun e -> V.add_edge v e) in
+        let _ = List.map edges ~f:(fun e -> V.add v e) in
         Ok ()
     | None ->
        Error invalid_vertex
@@ -159,7 +159,7 @@ end
 
 let%test_module "list_vertex_graph" =
   ( module struct
-    module S = Make_graph (Vertex.Vertex_list)
+    module S = Make (Vertex.Vertex_list)
 
     let%test "create" =
       let graph = S.create 100 in
@@ -186,7 +186,7 @@ let%test_module "list_vertex_graph" =
 
 let%test_module "set_vertex_graph" =
   ( module struct
-    module S = Make_graph (Vertex.Vertex_set)
+    module S = Make (Vertex.Vertex_set)
 
     let%test "create" =
       let graph = S.create 100 in

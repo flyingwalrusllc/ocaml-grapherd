@@ -2,30 +2,43 @@ open Core
 
 type t =
   | Empty
+  | Simple of Label.t
+  | Weighted of {id: Label.t; weight: Weight.t; }
   | Valid of {id: Label.t; weight: Weight.t; properties: Property.t list}
 [@@deriving show, yojson]
 
-let label e = match e with Empty -> Label.empty | Valid l -> l.id
+let label e = match e with
+  | Empty -> Label.empty
+  | Simple l -> l
+  | Weighted w -> w.id
+  | Valid l -> l.id
 
-let weight e = match e with Empty -> Weight.empty | Valid r -> r.weight
+let weight e =
+  match e with
+  | Empty -> Weight.empty
+  | Simple _ ->  Weight.empty
+  | Weighted w -> w.weight
+  | Valid r -> r.weight
 
-let properties e = match e with Empty -> [] | Valid r -> r.properties
+let properties e =
+  match e with
+  | Empty -> []
+  | Simple _ -> []
+  | Weighted _ -> []
+  | Valid r -> r.properties
 
 let create ?(weight = Weight.empty) ?(props = []) l =
-  Valid {id= l; weight; properties= props}
+  match (props, Weight.to_float weight) with
+  | ([], Some _) -> Weighted {id= l; weight= weight}
+  | ([], None) ->  Simple l
+  | _ -> Valid { id= l; weight= weight; properties= props; }
 
 let empty = Empty
 
 let compare a b =
-  match (a, b) with
-  | Empty, Empty ->
-      0
-  | Valid x, Valid y ->
-      Label.compare x.id y.id
-  | Valid _, Empty ->
-      1
-  | Empty, Valid _ ->
-      -1
+  let la = label a in
+  let lb = label b in
+  Label.compare la lb
 
 let equal a b = Int.equal (compare a b) 0
 
