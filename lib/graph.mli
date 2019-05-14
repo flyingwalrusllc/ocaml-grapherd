@@ -1,0 +1,2 @@
+(** @inline *)
+include Graph_intf.Graph
