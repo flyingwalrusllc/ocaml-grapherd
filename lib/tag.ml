@@ -49,7 +49,6 @@ let%test "create tag" =
 let%test "create a different tag" =
   let tag = create 1 "tag2" 1 in
   equal tag {id= 1; name= "tag2"; count= 1}
-  
 
 let%test "tags get saved in cloud" =
   match from_name "tag1" with
@@ -86,4 +85,3 @@ let%test "unreferenced tags don't get updated" =
       equal tag {id= 1; name= "tag2"; count= 1}
   | None ->
       false
-

@@ -1,5 +1,2 @@
-
-type t
-
-val combine : t -> t -> t
-                          
+(** @inline *)
+include Semigroup_intf.Semigroup

@@ -7,7 +7,10 @@ module type S = sig
     type t
 
     val of_int : int -> t
+
     val to_int : t -> int
+
+    val equal : t -> t -> bool
   end
 
   val get : 'a t -> Label.t -> 'a list
@@ -18,7 +21,6 @@ module type S = sig
 end
 
 module type Graph = sig
-
   module type S = S
 
   include S
@@ -26,6 +28,6 @@ module type Graph = sig
   val capacity : 'a t -> int
 
   val set_capacity : 'a t -> int -> unit Or_error.t
+
+  val create : int -> 'a t
 end
-                      
-                    
