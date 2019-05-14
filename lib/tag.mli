@@ -1,10 +1,11 @@
-type t [@@derving show]
+open Core
 
-val from_string : string -> t
+type t [@@derving show, compare]
 
-val to_string : t -> string
+val from_name : string -> t option
+(** if the name is a registered tag then return some t otherwise none *)
 
-val compare : t -> t -> int
+val name : t -> string
 
 val equal : t -> t -> bool
 
@@ -16,4 +17,6 @@ val less_than : t -> t -> bool
 
 val less_than_or_equal : t -> t -> bool
 
-val tag_of_tuple : int * string * int -> t
+val create : int -> string -> int -> t
+
+val update_count : ?incr:int -> string -> unit Or_error.t
