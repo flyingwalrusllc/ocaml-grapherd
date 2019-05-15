@@ -1,8 +1,13 @@
 open Core
-   
+
+(* open Grapher *)
+(* open Graph *)
+
 (* let max_k = 4 *)
 
-let all_shortest_paths _ _ _ _ = Ok []
+let all_shortest_paths _ _ _ _ (* graph root target max_depth *) =
+  (* *)
+  Ok []
 
 let k_reachable _ _ _ = Array.create ~len:1 []
 

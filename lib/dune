@@ -5,4 +5,4 @@
    monoid_intf monoid growable_array)
  (preprocess
   (pps ppx_jane ppx_deriving_yojson))
- (libraries core ppx_deriving.runtime))
+ (libraries core ppx_deriving.runtime higher))

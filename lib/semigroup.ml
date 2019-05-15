@@ -1,3 +1,4 @@
+open Base
 include Semigroup_intf
 
 module Make (X : S) : S with type 'a t := 'a X.t = struct

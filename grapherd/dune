@@ -2,9 +2,10 @@
  (name graph_api)
  (inline_tests)
  (modules graph_api)
- (preprocess (pps ppx_inline_test))
+ (preprocess
+  (pps ppx_inline_test))
  (libraries grapher))
-  
+
 (executable
  (name grapherd)
  (modules grapherd)
