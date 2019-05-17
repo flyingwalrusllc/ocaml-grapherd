@@ -2,7 +2,8 @@
  (name grapher)
  (inline_tests)
  (modules graph graph_intf feature_flipper tag semigroup_intf semigroup
-   monoid_intf monoid growable_array)
+   monoid_intf monoid functor_intf functor applicative_intf applicative
+   growable_array)
  (preprocess
   (pps ppx_jane
        ppx_deriving_yojson

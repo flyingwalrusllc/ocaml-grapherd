@@ -11,5 +11,6 @@ module type Monoid = sig
 
   module Make (X : S) : S with type 'a t := 'a X.t
 
-  module List_monoid : S with type 'a t := 'a list
+  module List : S with type 'a t := 'a list
+
 end

@@ -11,4 +11,8 @@
 (executable
  (name grapherd)
  (modules grapherd)
+ (preprocess
+  (pps
+    ppx_jane
+    bisect_ppx -conditional -no-comment-parsing))
  (libraries httpaf httpaf-async async graph_api))
