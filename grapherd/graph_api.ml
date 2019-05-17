@@ -61,4 +61,3 @@ let%test _ =
   let _ = all_shortest_paths () () () () in
   let _ = k_reachable () () () in
   true
-             

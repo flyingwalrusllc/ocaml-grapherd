@@ -23,22 +23,16 @@ module Result = Make (struct
 end)
 
 let%test "list functor" =
-  let data = [1; 2; 3 ] in
+  let data = [1; 2; 3] in
   let results = List.map data (fun i -> i + 1) in
-  Base.List.equal data results ~equal:(fun i j -> Base.Int.equal i (j-1)) 
+  Base.List.equal data results ~equal:(fun i j -> Base.Int.equal i (j - 1))
 
 let%test "option functor" =
   let data = Some 10 in
   let results = Option.map data (fun i -> i + 1) in
-  match (data, results) with
-  | (Some 10, Some 11) -> true
-  | _ -> false
+  match (data, results) with Some 10, Some 11 -> true | _ -> false
 
 let%test "result functor" =
   let first = Ok 100 in
   let second = Result.map first (fun i -> i + 100) in
-  match second with
-  | Ok 200 -> true
-  | _ -> false
-               
-              
+  match second with Ok 200 -> true | _ -> false

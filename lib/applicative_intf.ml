@@ -16,5 +16,4 @@ module type Applicative = sig
   module List : S with type 'a t := 'a list
 
   module Option : S with type 'a t := 'a option
-       
 end
