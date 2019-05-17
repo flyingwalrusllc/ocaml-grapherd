@@ -4,5 +4,7 @@
  (modules graph graph_intf feature_flipper tag semigroup_intf semigroup
    monoid_intf monoid growable_array)
  (preprocess
-  (pps ppx_jane ppx_deriving_yojson))
+  (pps ppx_jane
+       ppx_deriving_yojson
+       bisect_ppx -conditional -no-comment-parsing))
  (libraries core ppx_deriving.runtime higher))

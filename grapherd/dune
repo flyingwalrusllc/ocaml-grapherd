@@ -3,7 +3,9 @@
  (inline_tests)
  (modules graph_api)
  (preprocess
-  (pps ppx_inline_test))
+  (pps
+    ppx_jane
+    bisect_ppx -conditional -no-comment-parsing))
  (libraries grapher))
 
 (executable
