@@ -12,4 +12,9 @@ module type Applicative = sig
   module type S = S
 
   module Make (X : S) : S with type 'a t := 'a X.t
+
+  module List : S with type 'a t := 'a list
+
+  module Option : S with type 'a t := 'a option
+       
 end
