@@ -14,10 +14,14 @@ module type S = sig
   end
 
   val get : 'a t -> Label.t -> 'a list
+  (** [get graph label] get all edges for vertex label *)
 
-  val add : 'a t -> Label.t -> 'a -> unit Or_error.t
+  val add : 'a t -> Label.t -> 'a -> 'a t Or_error.t
+  (** [add graph label a] add edge a to vertex label *)
 
-  val remove : 'a t -> Label.t -> unit Or_error.t
+  val clear : 'a t -> Label.t -> 'a t Or_error.t
+
+  val remove : 'a t -> Label.t -> 'a -> 'a t Or_error.t
 end
 
 module type Graph = sig
@@ -27,7 +31,7 @@ module type Graph = sig
 
   val capacity : 'a t -> int
 
-  val set_capacity : 'a t -> int -> unit Or_error.t
+  val set_capacity : 'a t -> int -> 'a t Or_error.t
 
   val create : int -> 'a t
 end
