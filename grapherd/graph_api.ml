@@ -55,3 +55,9 @@ let k_reachable _ _ _ = Array.create ~len:1 []
  *       let kr = k_reachable graph (Label.of_int 10) (Reachable.of_int 2) in
  *       Int.equal (Array.length kr) 3
  *   end ) *)
+
+(* not the worst of all tests but nearly so *)
+let%test _ =
+  let _ = all_shortest_paths () () () () in
+  let _ = k_reachable () () () in
+  true

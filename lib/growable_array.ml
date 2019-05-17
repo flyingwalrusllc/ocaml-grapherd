@@ -1,36 +1,43 @@
 open Core
-open Bigarray
 
-type 'a t =
-  { mutable arr: (int, int_elt, c_layout) Array1.t
-  ; mutable length: int
-  ; to_int: 'a -> int
-  ; of_int: int -> 'a }
+type 'a t = {mutable arr: 'a array; zero: 'a; mutable max: int}
 
-let of_array ar to_int of_int =
-  let int_arr = Array.map ar ~f:(fun a -> to_int a) in
-  { arr= Array1.of_array Bigarray.Int c_layout int_arr
-  ; length= Array.length ar
-  ; to_int
-  ; of_int }
+let of_array ar zero = {arr= Array.copy ar; zero; max= 0}
 
-let get da i = da.of_int (Array1.get da.arr i)
+let get da i = da.arr.(i)
 
-let set da i v = Array1.set da.arr i (da.to_int v)
+let set da i v = da.arr.(i) <- v
 
-let length da = da.length
+let max da = da.max
 
 let grow g id =
-  let rec growth_amount current at_least =
-    if current > at_least then current
-    else growth_amount (current * 2) at_least
+  let rec calc_growth current at_least =
+    if current > at_least then current else calc_growth (current * 2) at_least
   in
-  let n_size = growth_amount g.length id in
-  let growth = n_size - g.length in
-  if growth > 0 then (
-    let n_arr = Array1.create Bigarray.Int c_layout n_size in
-    let _ = Array1.blit g.arr n_arr in
-    g.arr <- n_arr ;
-    g.length <- n_size ;
-    g )
+  let n_size = calc_growth (Array.length g.arr) id in
+  let growth = n_size - Array.length g.arr in
+  if growth > 0 then
+    let n_arr = Array.create ~len:growth g.zero in
+    let _ = g.arr <- Array.append g.arr n_arr in
+    g
   else g
+
+let%test_module _ =
+  ( module struct
+    let start = of_array (Array.create ~len:100 0) 0
+
+    let%test "get existing" =
+      let x = get start 50 in
+      Int.equal x 0
+
+    let%test "set existing" =
+      let _ = set start 50 50 in
+      let x = get start 50 in
+      Int.equal x 50
+
+    let%test "grow" =
+      let _ = grow start 1000 in
+      let _ = set start 666 23 in
+      let x = get start 666 in
+      Int.equal x 23
+  end )
