@@ -5,6 +5,6 @@
    monoid_intf monoid functor_intf functor applicative_intf applicative
    growable_array)
  (preprocess
-  (pps ppx_inline_test ppx_compare ppx_deriving_yojson bisect_ppx -conditional
-    -no-comment-parsing))
+  (pps ppx_inline_test ppx_compare ppx_deriving_yojson bisect_ppx
+    -conditional -no-comment-parsing))
  (libraries core ppx_deriving.runtime higher))

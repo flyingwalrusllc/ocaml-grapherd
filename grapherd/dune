@@ -1,6 +1,7 @@
 (executable
  (name grapherd)
- (modules grapherd graph_api)
+ (modules grapherd graph_api mysql_async loader)
  (preprocess
-  (pps bisect_ppx -conditional -no-comment-parsing))
- (libraries httpaf httpaf-async async))
+  (pps ppx_mysql bisect_ppx -conditional -no-comment-parsing))
+ (libraries core ppx_deriving.runtime higher mysql ppx_mysql.runtime httpaf
+   httpaf-async async))
