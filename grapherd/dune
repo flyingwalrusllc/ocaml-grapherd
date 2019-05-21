@@ -1,14 +1,6 @@
-(library
- (name graph_api)
- (inline_tests)
- (modules graph_api)
- (preprocess
-  (pps ppx_jane bisect_ppx -conditional -no-comment-parsing))
- (libraries grapher))
-
 (executable
  (name grapherd)
- (modules grapherd)
+ (modules grapherd graph_api)
  (preprocess
-  (pps ppx_jane bisect_ppx -conditional -no-comment-parsing))
- (libraries httpaf httpaf-async async graph_api))
+  (pps bisect_ppx -conditional -no-comment-parsing))
+ (libraries httpaf httpaf-async async))

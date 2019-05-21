@@ -25,7 +25,7 @@ end)
 let%test "list functor" =
   let data = [1; 2; 3] in
   let results = List.map data (fun i -> i + 1) in
-  Base.List.equal data results ~equal:(fun i j -> Base.Int.equal i (j - 1))
+  Base.List.equal (fun i j -> Base.Int.equal i (j - 1)) data results
 
 let%test "option functor" =
   let data = Some 10 in

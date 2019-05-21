@@ -26,3 +26,21 @@ I tried with travis-ci and failed. Failed miserably. The project
 builds successfully locally and in my CI container running both alpine
 and ubuntu. Maybe its just me but "dune build grapherd/grapherdexe
 @runtest" should work seamlessly and shouldn't take 15 minutes.
+* Building
+** our dependency tree is a bit challenging
+*** opam pin add ppx_bin_prot --dev-repo 
+*** opam pin add ppx_deriving_yojson --dev-repo
+*** install mysql (I used mysql 5.7 from brew on mac osx)
+*** fix the environment
+#BEGIN_SRC
+export PATH=$PATH:/my/path/to/mysql_config
+export LDFLAGS="-L/usr/local/opt/openssl/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl/include"
+#END_SRC
+*** opam install mysql
+*** opam source ppx_mysql --dev-repo --pin
+*** edit ppx_mysql.opam to remove the version upper bound on ppxlib
+*** opam update .
+*** opam install core httpaf-async higher ppx_compare bisect_ppx
+*** hack away!
+

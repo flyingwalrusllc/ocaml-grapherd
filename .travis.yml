@@ -6,8 +6,8 @@ cache:
     - $HOME/.opam
     - $HOME/ocaml
 
-install: bash -ex .travis-ci.sh prepare
-script: bash -ex .travis-ci.sh build
+install: wget https://raw.githubusercontent.com/ocaml/ocaml-travisci-skeleton/master/.travis-docker.sh
+script: bash -ex ./.travis-docker.sh
 
 matrix:
   include:
