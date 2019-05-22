@@ -11,6 +11,7 @@ depends: [
   "core"
   "ppx_deriving"
   "ppx_inline_test"
+  "higher"
 ]
 build: [
   ["dune" "subst"] {pinned}
