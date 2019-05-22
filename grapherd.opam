@@ -9,12 +9,12 @@ depends: [
   "ocaml" {>= "4.03"}
   "dune" {build}
   "core"
-  "async"
+  "higher"
   "httpaf"
   "httpaf-async"
+  "async"
   "grapher"
-  "ppx_deriving"
-  "ppx_inline_test"
+  "bisect_ppx"
 ]
 build: [
   ["dune" "subst"] {pinned}

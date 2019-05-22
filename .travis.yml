@@ -1,27 +1,21 @@
 language: c
-sudo: false
-
 cache:
   directories:
-    - $HOME/.opam
-    - $HOME/ocaml
+    - /home/opam/.opam
+    - /home/opam/ocaml
+services:
+  - docker
+sudo: false
 
 install: wget https://raw.githubusercontent.com/ocaml/ocaml-travisci-skeleton/master/.travis-docker.sh
 script: bash -ex ./.travis-docker.sh
 
-matrix:
-  include:
-    - os: linux
-      env: OCAML_VERSION=4.07 OCAML_RELEASE=1 WITH_OPAM=0
-      stage: Build
-    - os: osx
-      env: OCAML_VERSION=4.07 OCAML_RELEASE=1 WITH_OPAM=0
-      stage: Build_macOS
-    - os: linux
-      env: OCAML_VERSION=4.07 OCAML_RELEASE=1 WITH_OPAM=1
-      stage: Test
-      addons:
-        apt:
-          packages:
-            - aspcud
+env:
+  global:
+    - PINS="grapher:. grapherd:."
+    - PRE_INSTALL_HOOK="cd /home/opam/opam-repository && git pull origin master && opam update -u -y"
+    - DISTRO=debian-stable
+  matrix:
+    - PACKAGE="grapher" OCAML_VERSION="4.07.1"
+    - PACKAGE="grapherd" OCAML_VERSION="4.07.1" EXTRA_DEPS="mysql"
       

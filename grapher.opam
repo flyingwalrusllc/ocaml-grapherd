@@ -11,6 +11,9 @@ depends: [
   "core"
   "ppx_deriving"
   "ppx_inline_test"
+  "ppx_deriving_yojson"
+  "bisect_ppx"
+  "higher"
 ]
 build: [
   ["dune" "subst"] {pinned}
