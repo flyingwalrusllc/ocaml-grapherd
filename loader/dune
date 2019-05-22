@@ -1,6 +1,0 @@
-(executable
- (name loader)
- (preprocess
-  (pps ppx_mysql
-       bisect_ppx -conditional -no-comment-parsing))
- (libraries core ppx_deriving.runtime higher mysql ppx_mysql_identity))

@@ -29,8 +29,7 @@ let get_links_for_user handle user_id =
         "select @int32{id}, @int32{user_id}, @int32{link_id} from links where \
          user_id = %int32{user_id}"]
   in
-  let res = stmt handle ~user_id in
-  res
+  stmt handle ~user_id
 
 let print_link link =
   let _ =
@@ -38,3 +37,24 @@ let print_link link =
       link.user_id link.link_id
   in
   ()
+
+let add_edge =
+  [%mysql
+    execute
+      "insert into links (user_id, link_id) values (%int32{user_id}, \
+       %int32{link_id})"]
+
+let add_edges =
+  [%mysql
+    execute
+      "insert into links (user_id, link_id) values \
+       %list{(%int32{user_id},%int32{link_id})}"]
+
+let remove_edge handle link =
+  let stmt =
+    [%mysql
+      execute
+        "delete from links where user_id=%int32{user_id} and \
+         link_id=%int32{link_id}"]
+  in
+  stmt handle link.user_id link.link_id
