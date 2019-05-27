@@ -1,6 +1,7 @@
+
 (executable
  (name grapherd)
  (modules grapherd graph_api)
  (preprocess
-  (pps bisect_ppx -conditional -no-comment-parsing))
+  (pps ppx_let bisect_ppx -conditional -no-comment-parsing))
  (libraries core higher httpaf httpaf-async async))
