@@ -16,6 +16,6 @@ env:
     - PRE_INSTALL_HOOK="cd /home/opam/opam-repository && git pull origin master && opam update -u -y"
     - DISTRO=debian-stable
   matrix:
-    - PACKAGE="grapher" OCAML_VERSION="4.07.1"
+    - PACKAGE="libgraph" OCAML_VERSION="4.07.1"
     - PACKAGE="grapherd" OCAML_VERSION="4.07.1" EXTRA_DEPS="mysql"
       
