@@ -12,7 +12,7 @@ script: bash -ex ./.travis-docker.sh
 
 env:
   global:
-    - PINS="grapher:. grapherd:."
+    - PINS="libgraph:. grapherd:."
     - PRE_INSTALL_HOOK="cd /home/opam/opam-repository && git pull origin master && opam update -u -y"
     - DISTRO=debian-stable
   matrix:
