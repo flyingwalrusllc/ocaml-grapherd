@@ -2,9 +2,9 @@ opam-version: "2.0"
 maintainer: "crispywalrus@gmail.com"
 authors: ["Chris Vale"]
 license: "GPL3"
-homepage: "https://github.com/flyingwalrusllc/ocaml-space"
-doc: "http://flyingwalrusllc.github.io/ocaml-space/"
-bug-reports: "https://github.com/flyingwalrusllc/ocaml-space/issues"
+homepage: "https://github.com/flyingwalrusllc/ocaml-grapherd"
+doc: "http://flyingwalrusllc.github.io/ocaml-grapherd/"
+bug-reports: "https://github.com/flyingwalrusllc/ocaml-grapherd/issues"
 depends: [
   "ocaml" {>= "4.03"}
   "dune" {build}
