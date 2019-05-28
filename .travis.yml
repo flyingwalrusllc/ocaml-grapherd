@@ -17,5 +17,5 @@ env:
     - DISTRO=debian-stable
   matrix:
     - PACKAGE="libgraph" OCAML_VERSION="4.07.1"
-    - PACKAGE="grapherd" OCAML_VERSION="4.07.1" EXTRA_DEPS="mysql"
+
       
