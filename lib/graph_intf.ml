@@ -4,13 +4,25 @@ module type S = sig
   type 'a t
 
   module Label : sig
-    type t
+    module T : sig
+      type t
 
-    val of_int : int -> t
+      val of_int : int -> t
 
-    val to_int : t -> int
+      val to_int : t -> int
 
-    val equal : t -> t -> bool
+      val equal : t -> t -> bool
+
+      val compare : t -> t -> int
+
+      val sexp_of_t : t -> Sexp.t
+    end
+
+    type t = T.t
+
+    type comparator_witness = Comparator.Make(T).comparator_witness
+
+    val comparator : (t, comparator_witness) Comparator.t
   end
 
   val get : 'a t -> Label.t -> 'a list

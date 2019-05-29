@@ -3,13 +3,22 @@ include Graph_intf
 
 (** A simple wrapper around int that represents the id's of vertices *)
 module Label = struct
-  type t = int
+  module T = struct
+    type t = int
 
-  let of_int i = i
+    let of_int i = i
 
-  let to_int l = l
+    let to_int l = l
 
-  let equal a b = Int.equal (of_int a) (of_int b)
+    let equal a b = Int.equal (of_int a) (of_int b)
+
+    let compare a b = Int.compare (of_int a) (of_int b)
+
+    let sexp_of_t l = Int.sexp_of_t (to_int l)
+  end
+
+  include T
+  include Comparator.Make (T)
 end
 
 type 'a t = {arr: 'a list array; max: int}
