@@ -1,27 +1,22 @@
-open Base
+open Core
 include Graph_intf
 
 (** A simple wrapper around int that represents the id's of vertices *)
 module Label = struct
   module T = struct
-    type t = int
+    type t = int [@@deriving sexp, compare, equal]
 
     let of_int i = i
 
     let to_int l = l
 
-    let equal a b = Int.equal (of_int a) (of_int b)
-
-    let compare a b = Int.compare (of_int a) (of_int b)
-
-    let sexp_of_t l = Int.sexp_of_t (to_int l)
   end
 
   include T
   include Comparator.Make (T)
 end
 
-type 'a t = {arr: 'a list array; max: int}
+type 'a t = {arr: 'a list array; max: int} [@@deriving sexp]
 
 let capacity graph = Array.length graph.arr
 
@@ -120,4 +115,5 @@ let%test_module "graph" =
       extract_or_raise (add graph l1000 l800) "add of l800 to l1000 failed"
 
     let%test "increase capacity" = capacity graph > 1000
+
   end )
