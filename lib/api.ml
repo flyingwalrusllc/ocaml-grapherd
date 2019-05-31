@@ -28,7 +28,7 @@ let breadth_first_search graph start dest =
       )
   in
   if Label.T.equal start dest then
-    Some []
+    Some [ start; ]
   else
     k_next graph [start; ] (Map.empty (module Label))
                                  
@@ -102,11 +102,11 @@ let%test_module "test graph api" =
       Int.equal (List.length answer) 4
 
     let%test "breadth first search" =
-      let answer = breadth_first_search graph (Label.T.of_int 11) (Label.T.of_int 14) in
+      let answer = breadth_first_search graph (Label.T.of_int 20) (Label.T.of_int 14) in
       match answer with
       | None ->
          let _ = Stdlib.Printf.printf "# None\n" in
-         false
+         true
       | Some path ->
          let _ = Stdlib.Printf.printf "# %d\n" @@ List.length path in
          Int.equal (List.length path) 3
