@@ -1,7 +1,7 @@
 open Base
 
 module type S = sig
-  type 'a t [@@deriving sexp]
+  type 'a t
 
   module Label : sig
     module T : sig
