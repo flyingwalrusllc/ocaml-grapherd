@@ -1,15 +1,17 @@
 open Base
 
 module type S = sig
-  type 'a t
+  type 'a t [@@deriving sexp]
 
   module Label : sig
     module T : sig
-      type t [@@deriving compare, equal, sexp]
+      type t [@@deriving compare, equal, sexp, hash]
 
       val of_int : int -> t
 
       val to_int : t -> int
+
+      val to_string : t -> string
 
     end
 
@@ -17,8 +19,9 @@ module type S = sig
 
     type comparator_witness = Comparator.Make(T).comparator_witness
 
-    val comparator : (t, comparator_witness) Comparator.t
+    val to_string : t -> string
 
+    val comparator : (t, comparator_witness) Comparator.t
   end
 
   val get : 'a t -> Label.t -> 'a list

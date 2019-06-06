@@ -4,16 +4,19 @@ include Graph_intf
 (** A simple wrapper around int that represents the id's of vertices *)
 module Label = struct
   module T = struct
-    type t = int [@@deriving sexp, compare, equal]
+    type t = int [@@deriving sexp, compare, equal, hash]
 
     let of_int i = i
 
     let to_int l = l
+                 
+    let to_string l = Int.to_string (to_int l)
 
   end
 
   include T
   include Comparator.Make (T)
+  
 end
 
 type 'a t = {arr: 'a list array; max: int} [@@deriving sexp]
@@ -115,5 +118,4 @@ let%test_module "graph" =
       extract_or_raise (add graph l1000 l800) "add of l800 to l1000 failed"
 
     let%test "increase capacity" = capacity graph > 1000
-
   end )
