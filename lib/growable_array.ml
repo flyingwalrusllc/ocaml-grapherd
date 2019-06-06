@@ -2,27 +2,21 @@ open Core
 
 type 'a t = {mutable arr: 'a array; zero: 'a; mutable max: int}
 
-let create size zero =
-  { arr= Array.create ~len:size zero
-  ; zero= zero
-  ; max= 0 }
-  
+let create size zero = {arr= Array.create ~len:size zero; zero; max= 0}
+
 let of_array ar zero = {arr= Array.copy ar; zero; max= 0}
 
 let get da i = da.arr.(i)
 
 let set da i v =
   let _ = da.arr.(i) <- v in
-  let _ = if da.max < i then
-            da.max <- i
-  in
+  let _ = if da.max < i then da.max <- i in
   ()
-  
 
 let max da = da.max
 
 let capacity ga = Array.length ga.arr
-                
+
 let ensure g id =
   let rec calc_growth current at_least =
     if current > at_least then current else calc_growth (current * 2) at_least
@@ -45,11 +39,11 @@ let%test_module _ =
     let%test "set existing" =
       let _ = set start 50 50 in
       let x = get start 50 in
-      (Int.equal x 50) && Int.equal 50 @@ max start
+      Int.equal x 50 && (Int.equal 50 @@ max start)
 
     let%test "grow" =
       let _ = ensure start 1000 in
       let _ = set start 666 23 in
       let x = get start 666 in
-      (Int.equal x 23) && Int.equal 666 @@ max start
+      Int.equal x 23 && (Int.equal 666 @@ max start)
   end )
