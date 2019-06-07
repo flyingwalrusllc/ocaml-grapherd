@@ -5,6 +5,8 @@ cache:
     - /home/opam/ocaml
 services:
   - docker
+  - mysql
+  
 sudo: false
 
 install: wget https://raw.githubusercontent.com/ocaml/ocaml-travisci-skeleton/master/.travis-docker.sh
