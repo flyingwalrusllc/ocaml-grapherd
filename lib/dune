@@ -7,7 +7,7 @@
  (preprocess
   (pps ppx_inline_test ppx_compare ppx_jane bisect_ppx -conditional
     -no-comment-parsing))
- (libraries core ppx_deriving.runtime higher psq))
+ (libraries base ppx_deriving.runtime higher psq))
 
 (toplevel
  (name graphtop)

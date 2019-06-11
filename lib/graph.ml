@@ -1,4 +1,4 @@
-open Core
+open Base
 include Graph_intf
 
 (** A simple wrapper around int that represents the id's of vertices *)
@@ -9,14 +9,12 @@ module Label = struct
     let of_int i = i
 
     let to_int l = l
-                 
-    let to_string l = Int.to_string (to_int l)
 
+    let to_string l = Int.to_string (to_int l)
   end
 
   include T
   include Comparator.Make (T)
-  
 end
 
 type 'a t = {arr: 'a list array; max: int} [@@deriving sexp]

@@ -1,4 +1,4 @@
-open Core
+open Base
 open Grapher
 
 val all_shortest_paths :

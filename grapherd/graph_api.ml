@@ -1,4 +1,4 @@
-open Core
+open Base
 open Grapher
 open Graph
 
@@ -13,6 +13,8 @@ let k_reachable _ _ _ = Array.create ~len:1 []
 let%test_module _ =
   ( module struct
     (* create a sample data filled to make sure things generally work *)
+
+    ;;
     let graph = S.create 25 in
     let%map g =
       [ ( Label.of_int 10

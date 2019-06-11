@@ -3,4 +3,4 @@
  (modules grapherd graph_api)
  (preprocess
   (pps ppx_let bisect_ppx -conditional -no-comment-parsing))
- (libraries core higher httpaf httpaf-async async libgraph))
+ (libraries base higher httpaf httpaf-async async libgraph))

@@ -20,6 +20,18 @@
   (crunch (and :build))))
 
 (package
+ (name utils)
+ (synopsis "Some simple server utilities")
+ (depends
+  (core (> 0.12))
+  (ppx_deriving (> 4.2))
+  (higher (> 0.3))
+  (psq (> 0.2))
+  (dune (and :build (> 1.10)))
+  (bisect_ppx (> 1.4))
+  (crunch (and :build))))
+
+(package
  (name grapherd)
  (synopsis "RPC capable server linked with libgraph")
  (depends
