@@ -11,7 +11,7 @@
  (name libgraph)
  (synopsis "Library for a simple high performance graph server")
  (depends
-  (core (> 0.12))
+  (base (> 0.12))
   (ppx_deriving (> 4.2))
   (higher (> 0.3))
   (psq (> 0.2))
@@ -23,7 +23,8 @@
  (name utils)
  (synopsis "Some simple server utilities")
  (depends
-  (core (> 0.12))
+  (base (> 0.12))
+  (async (> 0.12))
   (ppx_deriving (> 4.2))
   (higher (> 0.3))
   (psq (> 0.2))
