@@ -15,8 +15,8 @@ dev-repo: "git+https://github.com/flyingwalrusllc/ocaml-grapherd.git"
 synopsis: "Some simple server utilities"
 depends: [
   "base" {> "0.12"}
-  "ppx_jane" {> "0.12"}
   "ppx_inline_tests" {> "0.12"}
+  "ppx_jane" {> "0.12"}
   "ppx_deriving" {> "4.2"}
   "dune" {build & > "1.10"}
   "bisect_ppx" {> "1.4"}
