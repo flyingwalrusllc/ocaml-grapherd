@@ -7,7 +7,7 @@
  (preprocess
   (pps ppx_inline_test ppx_jane bisect_ppx -conditional
     -no-comment-parsing))
- (libraries base ppx_deriving.runtime higher psq))
+ (libraries base higher psq))
 
 (rule
  (targets assets.ml)
