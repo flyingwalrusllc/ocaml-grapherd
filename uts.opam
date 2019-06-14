@@ -12,9 +12,4 @@ bug-reports: "https://github.com/flyingwalrusllc/ocaml-grapherd/issues"
 homepage: "https://github.com/flyingwalrusllc/ocaml-grapherd"
 license: "GPL-3.0-or-later"
 dev-repo: "git+https://github.com/flyingwalrusllc/ocaml-grapherd.git"
-synopsis: "Implementaion of unevenly spaced time series (Eckner 2010, 2018)"
-depends: [
-  "ppx_inline_tests" {> "0.12"}
-  "dune" {build & > "1.10"}
-  "bisect_ppx" {> "1.4"}
-]
+synopsis: "Algorithms for Unevenly Spaced Time Series c stubs"
