@@ -3,5 +3,5 @@
  (inline_tests)
  (modules feature_flipper tag)
  (preprocess
-  (pps ppx_jane))
+  (pps ppx_jane ppx_inline_test))
  (libraries base async))
