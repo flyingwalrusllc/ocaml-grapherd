@@ -1,7 +1,7 @@
 (library
  (name walrus_utils)
  (inline_tests)
- (modules feature_flipper tag mysql_async)
+ (modules feature_flipper tag)
  (preprocess
-  (pps ppx_jane ppx_mysql))
- (libraries base async mysql ppx_mysql.runtime))
+  (pps ppx_jane))
+ (libraries base async))

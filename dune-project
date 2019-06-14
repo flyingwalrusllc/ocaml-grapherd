@@ -12,6 +12,7 @@
  (synopsis "Library for a simple high performance graph server")
  (depends
   (base (> 0.12))
+  (ppx_jane (> 0.12))
   (ppx_deriving (> 4.2))
   (higher (> 0.3))
   (psq (> 0.2))
@@ -24,10 +25,8 @@
  (synopsis "Some simple server utilities")
  (depends
   (base (> 0.12))
-  (async (> 0.12))
+  (ppx_jane (> 0.12))
   (ppx_deriving (> 4.2))
-  (higher (> 0.3))
-  (psq (> 0.2))
   (dune (and :build (> 1.10)))
   (bisect_ppx (> 1.4))
   (crunch (and :build))))
@@ -36,10 +35,10 @@
  (name grapherd)
  (synopsis "RPC capable server linked with libgraph")
  (depends
-  (core (> 0.12))
+  (base (> 0.12))
   (ppx_deriving (> 4.2))
   (ppx_jane (> 0.12))
-  (higher (> 0.3))
-  (psq (> 0.2))
+  mysql
+  (ppx_mysql (>= 1.0))
   (dune (and :build (> 1.10)))
   (crunch (and :build))))
