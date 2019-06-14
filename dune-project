@@ -12,7 +12,7 @@
  (synopsis "Library for a simple high performance graph server")
  (depends
   (base (> 0.12))
-  (ppx_inline_tests (> 0.12))
+  (ppx_inline_test (> 0.12))
   (ppx_jane (> 0.12))
   (ppx_deriving (> 4.2))
   (higher (> 0.3))
@@ -26,7 +26,7 @@
  (synopsis "Some simple server utilities")
  (depends
   (base (> 0.12))
-  (ppx_inline_tests (> 0.12))
+  (ppx_inline_test (> 0.12))
   (ppx_jane (> 0.12))
   (ppx_deriving (> 4.2))
   (dune (and :build (> 1.10)))
@@ -44,3 +44,7 @@
   (ppx_mysql (>= 1.0))
   (dune (and :build (> 1.10)))
   (crunch (and :build))))
+
+ ;; Local Variables:
+ ;; mode: dune
+ ;; End:
