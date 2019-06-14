@@ -22,6 +22,10 @@
   (crunch (and :build))))
 
 (package
+ (name uts)
+ (synopsis "Algorithms for Unevenly Spaced Time Series c stubs"))
+
+(package
  (name utils)
  (synopsis "Some simple server utilities")
  (depends
@@ -53,3 +57,4 @@
  ;; Local Variables:
  ;; mode: dune
  ;; End:
+

@@ -12,18 +12,4 @@ bug-reports: "https://github.com/flyingwalrusllc/ocaml-grapherd/issues"
 homepage: "https://github.com/flyingwalrusllc/ocaml-grapherd"
 license: "GPL-3.0-or-later"
 dev-repo: "git+https://github.com/flyingwalrusllc/ocaml-grapherd.git"
-synopsis: "RPC capable server linked with libgraph"
-depends: [
-  "base" {> "0.12"}
-  "ppx_deriving" {> "4.2"}
-  "ppx_jane" {> "0.12"}
-  "httpaf"
-  "httpaf-async"
-  "async"
-  "mysql"
-  "higher"
-  "ppx_mysql" {>= "1.0"}
-  "bisect_ppx" {> "1.4"}
-  "dune" {build & > "1.10"}
-  "crunch" {build}
-]
+synopsis: "Algorithms for Unevenly Spaced Time Series c stubs"
