@@ -1,4 +1,4 @@
-open Core
+open Base
 
 type 'a t = {mutable arr: 'a array; zero: 'a; mutable max: int}
 

@@ -1,5 +1,3 @@
-(* open Core *)
-
 module type S = sig
   type label = int [@@deriving compare, equal, sexp]
 

@@ -1,4 +1,4 @@
-open Core
+open Base
 include Vertex_intf
 
 type label = int [@@deriving compare, equal, sexp]

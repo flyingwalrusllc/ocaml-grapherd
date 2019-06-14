@@ -19,9 +19,8 @@ let pp_label_list_array a =
   let _ = Array.map a ~f:(fun ll -> pp_label_list ll) in
   let _ = Stdio.print_endline " |]" in
   ()
-    
-[@@@end]
 
+[@@@end]
 
 let create a = [a]
 
@@ -39,8 +38,9 @@ let rec build_path comes_from path label =
   let _ = pp_label_list path in
   match Hashtbl.find comes_from label with
   | Some previous_v ->
-     build_path comes_from (previous_v :: path) previous_v
-  | None -> List.rev path
+      build_path comes_from (previous_v :: path) previous_v
+  | None ->
+      List.rev path
 
 let a_star graph start dest =
   let visited = ref (Set.empty (module Label)) in
@@ -49,37 +49,27 @@ let a_star graph start dest =
   let rec iter () =
     match Linked_queue.dequeue queue with
     | Some c ->
-       begin
-         if Label.T.equal c dest then
-           Some c
-       else
-         let _ = visited := Set.add !visited c in
-         let children = Graph.get graph c in
-         let _ = List.iter
-                   children
-                   ~f:(fun child ->
-                     if Set.mem !visited child then
-                       ()
-                     else
-                       let _ = Hashtbl.set came_from ~key:child ~data:c in
-                       let _ = Linked_queue.enqueue queue child in
-                       ()
-                   )
-           in
-         iter ()
-       end
+        if Label.T.equal c dest then Some c
+        else
+          let _ = visited := Set.add !visited c in
+          let children = Graph.get graph c in
+          let _ =
+            List.iter children ~f:(fun child ->
+                if Set.mem !visited child then ()
+                else
+                  let _ = Hashtbl.set came_from ~key:child ~data:c in
+                  let _ = Linked_queue.enqueue queue child in
+                  () )
+          in
+          iter ()
     | None ->
-       None
+        None
   in
-  if Label.T.equal start dest then
-    [start; ]
+  if Label.T.equal start dest then [start]
   else
     let _ = Linked_queue.enqueue queue start in
-    match iter () with
-    | Some _ ->
-       build_path came_from [] dest
-    | None -> []
-  
+    match iter () with Some _ -> build_path came_from [] dest | None -> []
+
 let%test_module "test graph api" =
   ( module struct
     let graph =

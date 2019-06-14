@@ -1,4 +1,4 @@
-open Core
+open Base
 open Async
 
 include Ppx_mysql_runtime.Make_context (struct

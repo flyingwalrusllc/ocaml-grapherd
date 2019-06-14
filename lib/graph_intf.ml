@@ -12,7 +12,6 @@ module type S = sig
       val to_int : t -> int
 
       val to_string : t -> string
-
     end
 
     type t = T.t

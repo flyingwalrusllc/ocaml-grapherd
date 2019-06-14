@@ -12,14 +12,12 @@ bug-reports: "https://github.com/flyingwalrusllc/ocaml-grapherd/issues"
 homepage: "https://github.com/flyingwalrusllc/ocaml-grapherd"
 license: "GPL-3.0-or-later"
 dev-repo: "git+https://github.com/flyingwalrusllc/ocaml-grapherd.git"
-synopsis: "Library for a simple high performance graph server"
+synopsis: "Some simple server utilities"
 depends: [
   "base" {> "0.12"}
   "ppx_inline_test" {> "0.12"}
   "ppx_jane" {> "0.12"}
   "ppx_deriving" {> "4.2"}
-  "higher" {> "0.3"}
-  "psq" {> "0.2"}
   "dune" {build & > "1.10"}
   "bisect_ppx" {> "1.4"}
   "crunch" {build}

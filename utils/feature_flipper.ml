@@ -1,4 +1,4 @@
-open Core
+open Base
 
 type t = {name: string; percent: float; id: int; description: string}
 
@@ -10,7 +10,9 @@ let update feature percent =
   ; id= feature.id
   ; description= feature.description }
 
-let feature feature = feature.percent >= Random.float 1.0
+let feature feature =
+  let roll = Random.float 1. in
+  Float.compare feature.percent roll >= 0
 
 let%test "featureA" =
   let featureA = create "featureA" 0.33 1 "test feature A" in
