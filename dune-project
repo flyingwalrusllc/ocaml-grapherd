@@ -45,12 +45,10 @@
   (ppx_deriving (> 4.2))
   (ppx_jane (> 0.12))
   httpaf
-  httpaf-async
-  async
+  httpaf-lwt-unix
   mysql
   higher
   (ppx_mysql (>= 1.0))
-  (bisect_ppx (> 1.4))
   (dune (and :build (> 1.10)))
   (crunch (and :build))))
 
