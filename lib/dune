@@ -5,9 +5,8 @@
  (modules graph graph_intf growable_array growable_array_intf api api_intf
    assets vertex_intf vertex)
  (preprocess
-  (pps ppx_inline_test ppx_jane bisect_ppx -conditional
-    -no-comment-parsing))
- (libraries base higher psq))
+  (pps ppx_inline_test ppx_jane bisect_ppx -conditional -no-comment-parsing))
+ (libraries core higher psq))
 
 (rule
  (targets assets.ml)

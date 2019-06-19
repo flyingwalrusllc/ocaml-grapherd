@@ -11,7 +11,7 @@
  (name libgraph)
  (synopsis "Library for a simple high performance graph server")
  (depends
-  (base (> 0.12))
+  (core (> 0.12))
   (ppx_inline_test (> 0.12))
   (ppx_jane (> 0.12))
   (ppx_deriving (> 4.2))
@@ -22,14 +22,12 @@
   (crunch (and :build))))
 
 (package
- (name uts)
- (synopsis "Algorithms for Unevenly Spaced Time Series c stubs"))
-
-(package
  (name utils)
  (synopsis "Some simple server utilities")
  (depends
-  (base (> 0.12))
+  (core (> 0.12))
+   mysql
+  (ppx_mysql (>= 1.0))
   (ppx_inline_test (> 0.12))
   (ppx_jane (> 0.12))
   (ppx_deriving (> 4.2))
@@ -38,10 +36,18 @@
   (crunch (and :build))))
 
 (package
+ (name uts)
+ (synopsis "Some simple server utilities")
+ (depends
+   ctypes
+   ctypes-foreign
+  (dune (and :build (> 1.10)))))
+
+(package
  (name grapherd)
  (synopsis "RPC capable server linked with libgraph")
  (depends
-  (base (> 0.12))
+  (core (> 0.12))
   (ppx_deriving (> 4.2))
   (ppx_jane (> 0.12))
   httpaf

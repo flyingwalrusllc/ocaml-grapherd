@@ -1,3 +1,4 @@
 (library
  (name uts)
+ (libraries ctypes)
  (c_names ema rolling sma))

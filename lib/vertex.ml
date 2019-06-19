@@ -21,7 +21,7 @@ let create ?(weight = 1.) ?(edges = []) label =
   let edge_array =
     if edge_count < 20 then
       let arr = Array.create ~len:20 Edge.empty in
-      let _ = List.iteri ~f:(fun idx edge -> arr.(idx) <- edge) in
+      let _ = List.iteri edges ~f:(fun idx edge -> arr.(idx) <- edge) in
       arr
     else List.to_array edges
   in

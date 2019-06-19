@@ -12,4 +12,9 @@ bug-reports: "https://github.com/flyingwalrusllc/ocaml-grapherd/issues"
 homepage: "https://github.com/flyingwalrusllc/ocaml-grapherd"
 license: "GPL-3.0-or-later"
 dev-repo: "git+https://github.com/flyingwalrusllc/ocaml-grapherd.git"
-synopsis: "Algorithms for Unevenly Spaced Time Series c stubs"
+synopsis: "Some simple server utilities"
+depends: [
+  "ctypes"
+  "ctypes-foreign"
+  "dune" {build & > "1.10"}
+]
