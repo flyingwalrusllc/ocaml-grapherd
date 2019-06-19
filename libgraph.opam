@@ -14,7 +14,7 @@ license: "GPL-3.0-or-later"
 dev-repo: "git+https://github.com/flyingwalrusllc/ocaml-grapherd.git"
 synopsis: "Library for a simple high performance graph server"
 depends: [
-  "base" {> "0.12"}
+  "core" {> "0.12"}
   "ppx_inline_test" {> "0.12"}
   "ppx_jane" {> "0.12"}
   "ppx_deriving" {> "4.2"}

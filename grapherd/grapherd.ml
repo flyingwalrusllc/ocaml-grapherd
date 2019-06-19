@@ -1,1 +1,1 @@
-let dummy _ = "Hello world"
+let _ = print_endline "Hello world"
