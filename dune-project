@@ -22,20 +22,6 @@
   (crunch (and :build))))
 
 (package
- (name utils)
- (synopsis "Some simple server utilities")
- (depends
-  (core (> 0.12))
-   mysql
-  (ppx_mysql (>= 1.0))
-  (ppx_inline_test (> 0.12))
-  (ppx_jane (> 0.12))
-  (ppx_deriving (> 4.2))
-  (dune (and :build (> 1.10)))
-  (bisect_ppx (> 1.4))
-  (crunch (and :build))))
-
-(package
  (name uts)
  (synopsis "Some simple server utilities")
  (depends

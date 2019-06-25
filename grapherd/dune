@@ -1,6 +1,6 @@
 (executable
  (name grapherd)
- (modules grapherd graph_api mysql_async loader)
+ (modules grapherd graph_api mysql_async loader httpaf_examples)
  (preprocess
   (pps ppx_jane ppx_mysql))
  (libraries core higher httpaf httpaf-async mysql ppx_mysql.runtime libgraph))
