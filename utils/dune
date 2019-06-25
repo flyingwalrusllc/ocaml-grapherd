@@ -1,7 +1,0 @@
-(library
- (name walrus_utils)
- (inline_tests)
- (modules feature_flipper tag)
- (preprocess
-  (pps ppx_jane ppx_inline_test))
- (libraries base))
